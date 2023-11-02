@@ -40,6 +40,8 @@ def matlab_proxy_cmd_for_testing():
 
     from jupyter_matlab_proxy.jupyter_config import config
 
+    # os.environ["MWI_LOG_LEVEL"] = "DEBUG"
+
     matlab_cmd = [
         matlab_proxy.get_executable_name(),
         "--config",
