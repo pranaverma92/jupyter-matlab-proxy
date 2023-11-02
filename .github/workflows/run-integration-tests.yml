@@ -8,6 +8,9 @@ on:
   # Trigger on workflow call
   workflow_dispatch:
   workflow_call:
+  push:
+    branches:
+      - testing_integ_tests
   
 jobs:
   python_integration_tests:
