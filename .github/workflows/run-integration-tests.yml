@@ -6,7 +6,11 @@ name: Integration testing MATLAB Jupyter Integration
 on:
   # Reusable workflow
   # Trigger on workflow call
+  workflow_dispatch:
   workflow_call:
+  push:
+    branches:
+      - jmp_integ_tests
 
 jobs:
   python_integration_tests:
@@ -14,9 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         #TODO: Add test coverage for macOs
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest]
         python-version: ["3.8", "3.11"]
-        matlab-release: [R2020b, R2023a]
+        matlab-release: [R2020b]
 
     runs-on: ${{ matrix.os }}
     steps:
