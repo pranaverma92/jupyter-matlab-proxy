@@ -57,12 +57,15 @@ jobs:
           TEST_USERNAME: ${{secrets.TEST_USERNAME}}
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
 
-      # - name: Download Log File
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: Log
-      #     path: ${{ github.workspace }}/tests/integration/integ_logs.log
+      - name: Generate log file
+        run: touch ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      - name: Output the log file
+        run: cat ${{ github.workspace }}/tests/integration/integ_logs.log
+
+      - name: Redirect Log File
+        run: |
+          cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
       - name: Download Log File
         if: ${{ always() }}
@@ -70,17 +73,6 @@ jobs:
         with:
           name: Log
           path: ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
-
-      - name: Redirect Log File
-        run: |
-          cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
-
-      # - name: Download Log File
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: Log
-      #     path: ${{ github.workspace }}/${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
       - name: List Log File
         if: ${{ always() }}
