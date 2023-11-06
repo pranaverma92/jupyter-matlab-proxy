@@ -58,12 +58,15 @@ jobs:
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
 
       - name: Generate log file
+        if: ${{ always() }}
         run: touch ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
       - name: Output the log file
+        if: ${{ always() }}
         run: cat ${{ github.workspace }}/tests/integration/integ_logs.log
 
       - name: Redirect Log File
+        if: ${{ always() }}
         run: |
           cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
