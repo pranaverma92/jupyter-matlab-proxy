@@ -30,6 +30,15 @@ def matlab_proxy_fixture(module_monkeypatch):
     # some time to resolve 'localhost' hostname
     matlab_proxy_url = f"http://127.0.0.1:{mwi_app_port}{mwi_base_url}"
 
+    home_location = os.getenv("GITHUB_WORKSPACE")
+    print("GITHUB WORKSPACE VALUE ", home_location)
+
+    dir_path = os.path.join(str(home_location), "tests", "integration", "integ_logs.log")
+    print("dir_path ",dir_path)
+
+    module_monkeypatch.setenv("MWI_LOG_FILE", str(dir_path))
+    process_start_timeout = 1200
+
     # Start matlab-proxy-app for testing
     input_env = {
         # MWI_JUPYTER_TEST env variable is used in jupyter_matlab_kernel/kernel.py
@@ -37,6 +46,9 @@ def matlab_proxy_fixture(module_monkeypatch):
         "MWI_JUPYTER_TEST": "true",
         "MWI_APP_PORT": mwi_app_port,
         "MWI_BASE_URL": mwi_base_url,
+        "MWI_LOG_LEVEL": "DEBUG",
+        "MWI_PROCESS_START_TIMEOUT": str(process_start_timeout),
+        "MWI_LOG_FILE": str(dir_path),
     }
 
     # Get event loop to start matlab-proxy in background

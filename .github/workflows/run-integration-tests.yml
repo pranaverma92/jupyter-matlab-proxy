@@ -52,3 +52,14 @@ jobs:
         env:
           TEST_USERNAME: ${{secrets.TEST_USERNAME}}
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
+
+      - name: Download Log File
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Log
+          path: ${{ github.workspace }}/tests/integration/integ_logs.log
+
+      - name: List Log File
+        if: ${{ always() }}
+        run: ls ${{ github.workspace }}/tests/integration/integ_logs.log
