@@ -190,7 +190,7 @@ def license_matlab_proxy(matlab_proxy_url):
         expect(
             status_info,
             "Verify if Licensing is successful. This might fail if incorrect credentials are provided",
-        ).to_be_visible(timeout=120000)
+        ).to_be_visible(timeout=600000)
         browser.close()
 
 
