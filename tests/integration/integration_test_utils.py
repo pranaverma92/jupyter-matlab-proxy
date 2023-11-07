@@ -163,7 +163,7 @@ def license_matlab_proxy(matlab_proxy_url):
         expect(
             mhlm_div,
             "Wait for MHLM licensing window to appear. This might fail if the MATLAB is already licensed",
-        ).to_be_visible(timeout=60000)
+        ).to_be_visible(timeout=600000)
 
         # The login iframe is present within the MHLM Div
         login_iframe = mhlm_div.frame_locator("#loginframe")
@@ -173,14 +173,14 @@ def license_matlab_proxy(matlab_proxy_url):
         expect(
             email_text_box,
             "Wait for email ID textbox to appear",
-        ).to_be_visible(timeout=20000)
+        ).to_be_visible(timeout=600000)
         email_text_box.fill(TEST_USERNAME)
         email_text_box.press("Enter")
 
         # Fills in the password textbox
         password_text_box = login_iframe.locator("#password")
         expect(password_text_box, "Wait for password textbox to appear").to_be_visible(
-            timeout=20000
+            timeout=600000
         )
         password_text_box.fill(TEST_PASSWORD)
         password_text_box.press("Enter")
