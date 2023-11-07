@@ -90,6 +90,7 @@ def matlab_proxy_fixture(module_monkeypatch):
 @pytest.fixture(scope="module", autouse=True)
 def matlab_config_cleanup_fixture(request):
     """
+
     Cleanup the directory that contains matlab config file
     before and after running the tests. This is done to make sure that
     matlab-proxy is unlicensed.
