@@ -52,7 +52,7 @@ jobs:
         run: python3 -m playwright install --with-deps
 
       - name: Integration test with pytest
-        run: python3 -m pytest tests/integration
+        run: python3 -m pytest tests/integration -vs
         env:
           TEST_USERNAME: ${{secrets.TEST_USERNAME}}
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
