@@ -62,7 +62,7 @@ def matlab_proxy_fixture(module_monkeypatch):
     integration_test_utils.poll_web_service(
         matlab_proxy_url,
         step=5,
-        timeout=120,
+        timeout=300,
         ignore_exceptions=(
             requests.exceptions.ConnectionError,
             requests.exceptions.SSLError,

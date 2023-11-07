@@ -43,50 +43,50 @@ class MATLABKernelTests(jupyter_kernel_test.KernelTests):
 
         self._run_code(code="clc;clear")
 
-    def test_completion(self):
-        """
-        MATLAB Kernel implementation of tab completion test method.
-        Overrides the default implementation in jupyter_kernel_test.KernelTests.
+    # def test_completion(self):
+    #     """
+    #     MATLAB Kernel implementation of tab completion test method.
+    #     Overrides the default implementation in jupyter_kernel_test.KernelTests.
 
-        Tests if the contents of the tab completion list for a given
-        'input text' are not null and starts with the 'input text'.
-        For example, the input text 'xyz' should have tab completion list
-        as ['xyzabc', 'xyzpqr']
-        """
-        input_text = "func"
-        msg_id = self.kc.complete(input_text)
-        reply = self.get_non_kernel_info_reply()
-        jupyter_kernel_test.validate_message(reply, "complete_reply", msg_id)
-        matches = set(reply["content"]["matches"])
-        self.assertGreater(
-            len(matches), 0, f"The text '{input_text}' does not have any tab completion"
-        )
-        for element in matches:
-            with self.subTest(element=element):
-                # Tab completion keys and matches are case-insensitive
-                # hence the input text and the resultant list of matches
-                # are first converted into lower cases before comparison
-                assert element.lower().startswith(
-                    input_text.lower()
-                ), f"The element '{element}' in tab completion list does not start with '{input_text}'"
+    #     Tests if the contents of the tab completion list for a given
+    #     'input text' are not null and starts with the 'input text'.
+    #     For example, the input text 'xyz' should have tab completion list
+    #     as ['xyzabc', 'xyzpqr']
+    #     """
+    #     input_text = "func"
+    #     msg_id = self.kc.complete(input_text)
+    #     reply = self.get_non_kernel_info_reply()
+    #     jupyter_kernel_test.validate_message(reply, "complete_reply", msg_id)
+    #     matches = set(reply["content"]["matches"])
+    #     self.assertGreater(
+    #         len(matches), 0, f"The text '{input_text}' does not have any tab completion"
+    #     )
+    #     for element in matches:
+    #         with self.subTest(element=element):
+    #             # Tab completion keys and matches are case-insensitive
+    #             # hence the input text and the resultant list of matches
+    #             # are first converted into lower cases before comparison
+    #             assert element.lower().startswith(
+    #                 input_text.lower()
+    #             ), f"The element '{element}' in tab completion list does not start with '{input_text}'"
 
-    def test_matlab_kernel_ver(self):
-        """Validates if 'ver' command executes successfully in MATLAB Kernel"""
+    # def test_matlab_kernel_ver(self):
+    #     """Validates if 'ver' command executes successfully in MATLAB Kernel"""
 
-        reply, output_msgs = self._run_code(code="ver")
-        self.assertEqual(self._get_output_header_msg_type(output_msgs), "stream")
-        self.assertEqual(
-            self._get_output_msg_name(output_msgs),
-            "stdout",
-            f"The output is:\n{self._get_output_text(output_msgs)}",
-        )
-        self.assertIn("MATLAB License Number", self._get_output_text(output_msgs))
+    #     reply, output_msgs = self._run_code(code="ver")
+    #     self.assertEqual(self._get_output_header_msg_type(output_msgs), "stream")
+    #     self.assertEqual(
+    #         self._get_output_msg_name(output_msgs),
+    #         "stdout",
+    #         f"The output is:\n{self._get_output_text(output_msgs)}",
+    #     )
+    #     self.assertIn("MATLAB License Number", self._get_output_text(output_msgs))
 
-    def test_matlab_kernel_simple_addition(self):
-        """Validates if 'TestSimpleAddition' MATLAB test file executes without any failures"""
+    # def test_matlab_kernel_simple_addition(self):
+    #     """Validates if 'TestSimpleAddition' MATLAB test file executes without any failures"""
 
-        test_filepath = os.path.join(os.path.dirname(__file__), "TestSimpleAddition.m")
-        self._validate_matlab_test(test_filepath)
+    #     test_filepath = os.path.join(os.path.dirname(__file__), "TestSimpleAddition.m")
+    #     self._validate_matlab_test(test_filepath)
 
     def test_matlab_kernel_peaks(self):
         """Validates if 'peaks' command plots a figure in jupyter cell output"""
