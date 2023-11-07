@@ -88,7 +88,7 @@ def wait_matlab_proxy_ready(matlab_proxy_url):
     # Timeout for polling the matlab-proxy http endpoints.
     # matlab-proxy takes more time to be 'up' in machines
     # other than Linux
-    MAX_TIMEOUT = 120 if system.is_linux() else 1200
+    MAX_TIMEOUT = 120 if system.is_linux() else 300
 
     is_matlab_licensed = False
     matlab_status = "down"
@@ -112,9 +112,6 @@ def wait_matlab_proxy_ready(matlab_proxy_url):
             # matlab-proxy server is booting. There can also be some
             # intermediate connection errors
             pass
-
-    print("MATLAB status is ", matlab_status)
-
     assert is_matlab_licensed == True, "MATLAB is not licensed"
     assert (
         matlab_status == "up"
@@ -182,13 +179,14 @@ def license_matlab_proxy(matlab_proxy_url):
         )
         password_text_box.fill(TEST_PASSWORD)
         password_text_box.press("Enter")
+        password_text_box.press("Enter")
 
         # Verifies if licensing is successful by checking the status information
         status_info = page.get_by_text("Status Information")
         expect(
             status_info,
             "Verify if Licensing is successful. This might fail if incorrect credentials are provided",
-        ).to_be_visible(timeout=120000)
+        ).to_be_visible(timeout=60000)
         browser.close()
 
 
