@@ -20,7 +20,7 @@ jobs:
         #TODO: Add test coverage for macOs
         os: [windows-latest]
         python-version: ["3.8", "3.11"]
-        matlab-release: [R2020b]
+        matlab-release: [R2023a]
 
     runs-on: ${{ matrix.os }}
     steps:
