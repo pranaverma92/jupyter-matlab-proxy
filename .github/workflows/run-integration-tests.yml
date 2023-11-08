@@ -50,13 +50,6 @@ jobs:
       - name: Create Folder
         run: mkdir -p ${{ github.workspace }}/videos
 
-      - name: Upload Playwright video
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: generated-video
-          path: ${{ github.workspace }}/videos
-
       - name: Integration test with pytest
         run: python3 -m pytest tests/integration --video on -vs
         env:
@@ -75,6 +68,13 @@ jobs:
         if: ${{ always() }}
         run: |
           cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      - name: Upload Playwright video
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated-video
+          path: ${{ github.workspace }}/videos
 
       - name: Download Playwright video
         if: ${{ always() }}
