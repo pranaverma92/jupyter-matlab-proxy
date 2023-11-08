@@ -90,7 +90,7 @@ def wait_matlab_proxy_ready(matlab_proxy_url):
     # Timeout for polling the matlab-proxy http endpoints.
     # matlab-proxy takes more time to be 'up' in machines
     # other than Linux
-    MAX_TIMEOUT = 120 if system.is_linux() else 300
+    MAX_TIMEOUT = 120 if system.is_linux() else 600
 
     is_matlab_licensed = False
     matlab_status = "down"
@@ -152,7 +152,13 @@ def license_matlab_proxy(matlab_proxy_url):
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
-        page = browser.new_page()
+        # page = browser.new_page()
+
+        context = browser.new_context(
+            record_video_dir="videos/", record_video_size={"width": 800, "height": 600}
+        )
+        page = context.new_page()
+
         page.goto(matlab_proxy_url)
 
         # Find the MHLM licensing windows in matlab-proxy

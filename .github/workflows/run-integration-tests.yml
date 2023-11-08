@@ -51,9 +51,49 @@ jobs:
       - name: Ensure browsers are installed for playwright
         run: python3 -m playwright install --with-deps
 
+      - name: Create Folder
+        run: mkdir -p ${{ github.workspace }}/videos
+
       - name: Integration test with pytest
-        run: python3 -m pytest tests/integration
+        run: python3 -m pytest tests/integration --video on -vs
         env:
           TEST_USERNAME: ${{secrets.TEST_USERNAME}}
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
-          MWI_PROCESS_START_TIMEOUT: ${{secrets.MWI_PROCESS_START_TIMEOUT}}
+
+      # - name: Generate log file
+      #   if: ${{ always() }}
+      #   run: touch ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      # - name: Output the log file
+      #   if: ${{ always() }}
+      #   run: cat ${{ github.workspace }}/tests/integration/integ_logs.log
+
+      # - name: Redirect Log File
+      #   if: ${{ always() }}
+      #   run: |
+      #     cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      - name: Upload Playwright video
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated-video
+          path: ${{ github.workspace }}/videos
+
+      - name: Download Playwright video
+        if: ${{ always() }}
+        uses: actions/download-artifact@v3
+        with:
+          name: generated-video
+          path: ${{ github.workspace }}/videos
+
+      # - name: Download Log File
+      #   if: ${{ always() }}
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: Log
+      #     path: ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      # - name: List Log File
+      #   if: ${{ always() }}
+      #   run: ls ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
