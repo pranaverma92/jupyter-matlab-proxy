@@ -152,11 +152,12 @@ def license_matlab_proxy(matlab_proxy_url):
         browser = playwright.chromium.launch(headless=True)
         # page = browser.new_page()
 
-        context = browser.new_context(record_video_dir='videos/', record_video_size={'width': 800, 'height': 600})
+        context = browser.new_context(
+            record_video_dir="videos/", record_video_size={"width": 800, "height": 600}
+        )
         page = context.new_page()
 
         page.goto(matlab_proxy_url)
-
 
         # Find the MHLM licensing windows in matlab-proxy
         mhlm_div = page.locator("#MHLM")
