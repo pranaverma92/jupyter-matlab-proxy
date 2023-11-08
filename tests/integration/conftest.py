@@ -39,7 +39,7 @@ def matlab_proxy_fixture(module_monkeypatch):
     # print("dir_path ", dir_path)
 
     # module_monkeypatch.setenv("MWI_LOG_FILE", str(dir_path))
-    # process_start_timeout = 400
+    process_start_timeout = 400
 
     # Start matlab-proxy-app for testing
     input_env = {
@@ -49,7 +49,7 @@ def matlab_proxy_fixture(module_monkeypatch):
         "MWI_APP_PORT": mwi_app_port,
         "MWI_BASE_URL": mwi_base_url,
         # "MWI_LOG_LEVEL": "DEBUG",
-        # "MWI_PROCESS_START_TIMEOUT": str(process_start_timeout),
+        "MWI_PROCESS_START_TIMEOUT": str(process_start_timeout),
         # "MWI_LOG_FILE": str(dir_path),
     }
 
