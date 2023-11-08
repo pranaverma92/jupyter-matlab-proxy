@@ -88,7 +88,7 @@ def wait_matlab_proxy_ready(matlab_proxy_url):
     # Timeout for polling the matlab-proxy http endpoints.
     # matlab-proxy takes more time to be 'up' in machines
     # other than Linux
-    MAX_TIMEOUT = 120 if system.is_linux() else 300
+    MAX_TIMEOUT = 120 if system.is_linux() else 600
 
     is_matlab_licensed = False
     matlab_status = "down"
