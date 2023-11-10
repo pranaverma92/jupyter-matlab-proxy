@@ -34,19 +34,12 @@ def matlab_proxy_fixture(module_monkeypatch):
     matlab_proxy_logs_path = None
 
     if os.environ.get('GITHUB_WORKSPACE') is not None:
-
         github_workspace_location = os.getenv("GITHUB_WORKSPACE")
-        print("GITHUB WORKSPACE VALUE ", github_workspace_location)
-
         matlab_proxy_logs_path = os.path.join(str(github_workspace_location), "tests", "integration", "integ_logs.log")
-        print("matlab_proxy_logs_path ",matlab_proxy_logs_path)
 
     else:
         from pathlib import Path
-
         matlab_proxy_logs_path = os.path.join(os.path.dirname(os.path.abspath(__name__)), "tests", "integration", "integ_logs.log")
-        print("matlab_proxy_logs_path ",matlab_proxy_logs_path)
-
 
     # Start matlab-proxy-app for testing
     input_env = {
