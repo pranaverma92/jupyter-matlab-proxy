@@ -52,3 +52,17 @@ jobs:
         env:
           TEST_USERNAME: ${{secrets.TEST_USERNAME}}
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
+
+      - name: Download log file
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: MATLAB Proxy log file
+          path: ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      - run: |
+          cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+
+      - name: List Log File
+        if: ${{ always() }}
+        run: ls ${{ github.workspace }}/tests/integration/integ_logs.log
