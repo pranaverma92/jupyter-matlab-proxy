@@ -1,0 +1,27 @@
+2023-11-10 14:13:32,487 - MATLABProxyApp - INFO - Found MATLAB executable at: /usr/local/bin/matlab
+2023-11-10 14:13:32,487 - MATLABProxyApp - INFO - MATLAB root path: /home/pverma/Desktop/matlab exists, continuing to verify its validity...
+2023-11-10 14:13:32,487 - MATLABProxyApp - INFO - Using 120 seconds as the default timeout value
+2023-11-10 14:13:32,491 - MATLABProxyApp - INFO - 
+============================
+MATLAB can be accessed at:
+http://localhost:52987/matlab-test
+============================
+
+2023-11-10 14:14:05,576 - MATLABProxyApp - INFO - Found MATLAB executable at: /usr/local/bin/matlab
+2023-11-10 14:14:05,576 - MATLABProxyApp - INFO - MATLAB root path: /home/pverma/Desktop/matlab exists, continuing to verify its validity...
+2023-11-10 14:14:05,576 - MATLABProxyApp - INFO - Using 120 seconds as the default timeout value
+2023-11-10 14:14:05,580 - MATLABProxyApp - INFO - 
+============================
+MATLAB can be accessed at:
+http://localhost:40405/matlab-test
+============================
+
+2023-11-10 14:14:12,206 - MATLABProxyApp - INFO - Stopped (any running) MATLAB process.
+2023-11-10 14:14:12,208 - MATLABProxyApp - INFO - Using 120 seconds as the default timeout value
+2023-11-10 14:14:45,819 - MATLABProxyApp - INFO - Shutting down MATLAB proxy-app
+2023-11-10 14:14:45,819 - MATLABProxyApp - INFO - Deleting:/home/pverma/.matlab/MWI/ports/40405/mwi_server.info
+2023-11-10 14:14:45,831 - MATLABProxyApp - INFO - Deleting:/home/pverma/.matlab/MWI/ports/40405/connector.securePort
+2023-11-10 14:14:45,833 - MATLABProxyApp - INFO - Stopped (any running) MATLAB process.
+2023-11-10 14:14:45,833 - MATLABProxyApp - INFO - Terminating Xvfb (PID=2461909)
+2023-11-10 14:14:45,927 - MATLABProxyApp - INFO - Waiting for MATLAB to exit...
+2023-11-10 14:14:45,927 - MATLABProxyApp - INFO - Finished shutting down. Thank you for using the MATLAB proxy.
