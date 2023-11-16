@@ -57,6 +57,10 @@ jobs:
         if: ${{ always() }}
         run: touch ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
+      - name: Redirect Log File
+        if: ${{ always() }}
+        run: |
+          cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
       - name: Download log file
         if: ${{ always() }}
@@ -65,11 +69,8 @@ jobs:
           name: MATLAB Proxy log file
           path: ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
-      - name: Redirect Log File
-        if: ${{ always() }}
-        run: |
+      - run: |
           cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
-
 
       - name: List Log File
         if: ${{ always() }}
