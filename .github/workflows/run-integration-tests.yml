@@ -57,7 +57,7 @@ jobs:
         if: ${{ always() }}
         run: touch ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
-      - name: Redirect Log File
+      - name: Copy Log File
         if: ${{ always() }}
         run: |
           cp ${{ github.workspace }}/tests/integration/integ_logs.log ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
