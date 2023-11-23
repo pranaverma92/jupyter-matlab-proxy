@@ -60,15 +60,11 @@ jobs:
       - name: Redirect Log File
         if: ${{ always() }}
         run: |
-          cat ${{ github.workspace }}/tests/integration/integ_logs.log > ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+          cp ${{ github.workspace }}/tests/integration/integ_logs.log ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
       - name: Download log file
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
-          name: MATLAB Proxy log file
+          name: MATLAB Proxy Integration Test Log File
           path: ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
-
-      - name: List Log File
-        if: ${{ always() }}
-        run: ls ${{ github.workspace }}/tests/integration/integ_logs.log
