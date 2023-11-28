@@ -53,16 +53,12 @@ jobs:
           TEST_USERNAME: ${{secrets.TEST_USERNAME}}
           TEST_PASSWORD: ${{secrets.TEST_PASSWORD}}
 
-      - name: Generate log file
-        if: ${{ always() }}
-        run: touch ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
-
       - name: Copy Log File
         if: ${{ always() }}
         run: |
           cp ${{ github.workspace }}/tests/integration/integ_logs.log ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
 
-      - name: Download log file
+      - name: Make logs files available for downloading
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
