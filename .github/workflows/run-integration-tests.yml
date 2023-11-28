@@ -16,6 +16,9 @@ jobs:
         #TODO: Add test coverage for macOs
         os: [ubuntu-latest, windows-latest]
         python-version: ["3.8", "3.11"]
+
+        # The minimum matlab-release is set to 21b as 20b and 21a are not supported by matlab-actions/setup-matlab.
+        # See https://github.com/matlab-actions/setup-matlab/issues/76
         matlab-release: [R2021b, R2023a]
 
     runs-on: ${{ matrix.os }}
@@ -64,3 +67,4 @@ jobs:
         with:
           name: MATLAB Proxy Integration Test Log File
           path: ${{ matrix.os }}${{ matrix.matlab-release }}${{ matrix.python-version }}.log
+          retention-days: 7
