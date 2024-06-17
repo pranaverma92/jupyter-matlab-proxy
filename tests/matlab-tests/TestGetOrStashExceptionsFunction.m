@@ -1,6 +1,6 @@
-classdef TestCompleteFunction < matlab.unittest.TestCase
+classdef TestGetOrStashExceptionsFunction < matlab.unittest.TestCase
     % TestCompleteFunction contains unit tests for the complete function
-    
+
     methods (TestClassSetup)
         function addFunctionPath(testCase)
             addpath('../../src/jupyter_matlab_kernel/matlab')
@@ -14,7 +14,7 @@ classdef TestCompleteFunction < matlab.unittest.TestCase
             rmpath('../../tests/matlab-tests/')
         end
     end
-    
+
     methods (Test)
         function testReturnExceptionOnReset(testCase)
             % Test that an exception can be returned and reset
@@ -27,7 +27,7 @@ classdef TestCompleteFunction < matlab.unittest.TestCase
             testCase.assertEmpty(resultAfterReset, ...
                 'The stashed exception should be cleared after being reset.');
         end
-    
+
         function testReturnStashedExceptionWithoutReset(testCase)
             % Test that the stashed exception is returned without resetting
             testMessage = 'Test Exception';
@@ -38,4 +38,3 @@ classdef TestCompleteFunction < matlab.unittest.TestCase
     end
 
 end
-
