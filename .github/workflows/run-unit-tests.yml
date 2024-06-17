@@ -4,8 +4,7 @@
 name: Unit Testing MATLAB Jupyter Integration
 
 on:
-  # Reusable workflow
-  # Trigger on workflow call
+  workflow_dispatch:
   workflow_call:
 
 jobs:
