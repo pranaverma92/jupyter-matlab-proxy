@@ -5,6 +5,9 @@ name: Unit Testing MATLAB Jupyter Integration
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - "matlab-tests"
 
 jobs:
   matlab_unit_tests:
