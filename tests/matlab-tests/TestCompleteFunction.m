@@ -29,12 +29,7 @@ classdef TestCompleteFunction < matlab.unittest.TestCase
             % Test behavior with empty code string
             code = '';
             cursorPosition = 0;
-
             result = jupyter.complete(code, cursorPosition);
-            % disp("result.matches")
-            % disp(size(result.matches))
-            % disp("result.matches end")
-
             testCase.verifyTrue(isempty(result.matches));
         end
 
@@ -43,17 +38,7 @@ classdef TestCompleteFunction < matlab.unittest.TestCase
             code = 'plot';
             cursorPosition = -1; % Invalid cursor position
             result = jupyter.complete(code, cursorPosition);
-            disp("result.matches")
-            disp(size(result.matches))
-            disp("result.matches end")
-            disp("isempty(result.matches)")
-            disp(isempty(result.matches))
-            disp("isempty(result.matches) end")
             testCase.verifyTrue(isempty(result.matches));
         end
-
-        
-
-
     end
 end

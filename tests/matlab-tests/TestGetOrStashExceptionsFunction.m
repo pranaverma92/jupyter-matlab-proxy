@@ -1,5 +1,5 @@
 classdef TestGetOrStashExceptionsFunction < matlab.unittest.TestCase
-    % TestCompleteFunction contains unit tests for the complete function
+    % TestCompleteFunction contains unit tests for the getOrStashExceptions function
 
     methods (TestClassSetup)
         function addFunctionPath(testCase)
