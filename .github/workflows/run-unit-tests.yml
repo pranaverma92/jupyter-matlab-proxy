@@ -30,6 +30,8 @@ jobs:
 
       - name: Run tests
         uses: matlab-actions/run-tests@v2
+        with:
+          select-by-folder: tests/matlab-tests
 
   python_unit_tests:
     env:
