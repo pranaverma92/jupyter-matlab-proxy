@@ -3,10 +3,16 @@
 # Workflow that contains jobs to test MATLAB Jupyter Integration
 name: Unit Testing MATLAB Jupyter Integration
 
+# on:
+#   # Reusable workflow
+#   # Trigger on workflow call
+#   workflow_call:
+
 on:
-  # Reusable workflow
-  # Trigger on workflow call
-  workflow_call:
+  workflow_dispatch:
+  push:
+    branches:
+      - "matlab-tests"
 
 
 jobs:
