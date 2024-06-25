@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "matlab-tests"
+      - "pverma/matlab-tests"
 
 
 jobs:
