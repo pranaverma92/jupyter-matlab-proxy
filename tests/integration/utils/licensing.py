@@ -21,8 +21,11 @@ def start_matlab_proxy_sync(parent_id, caller_id, isolated_matlab=False):
         dict: Information about the started MATLAB proxy.
     """
     loop = asyncio.get_event_loop()
-    return loop.run_until_complete(
-        mpm_lib.start_matlab_proxy_for_kernel(caller_id, parent_id, isolated_matlab)
+    return (
+        loop.run_until_complete(
+            mpm_lib.start_matlab_proxy_for_kernel(caller_id, parent_id, isolated_matlab)
+        ),
+        loop,
     )
 
 
@@ -35,6 +38,7 @@ def shutdown_matlab_proxy_sync(parent_id, caller_id, mpm_auth_token):
     """
     loop = asyncio.get_event_loop()
     loop.run_until_complete(mpm_lib.shutdown(parent_id, caller_id, mpm_auth_token))
+
 
 def license_matlab_proxy_no_mpm():
     try:
@@ -89,7 +93,7 @@ def license_matlab_proxy_no_mpm():
         utils.license_matlab_proxy(matlab_proxy_url)
 
         # Wait for matlab-proxy to be up and running
-        utils.wait_matlab_proxy_ready(matlab_proxy_url)
+        loop.run_until_complete(utils.wait_matlab_proxy_ready(matlab_proxy_url))
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -99,6 +103,7 @@ def license_matlab_proxy_no_mpm():
 
         except Exception as e:
             print(f"Failed to shut down matlab-proxy: {e}")
+
 
 def shutdown_matlab_proxy_no_mpm(proc, loop):
     # Terminate matlab-proxy
@@ -118,6 +123,7 @@ def shutdown_matlab_proxy_no_mpm(proc, loop):
     except Exception:
         proc.kill()
 
+
 def license_matlab_proxy_mpm():
     import time
 
@@ -133,11 +139,12 @@ def license_matlab_proxy_mpm():
 
     try:
         import uuid
+
         caller_id = str(uuid.uuid4())
         parent_id = str(uuid.uuid4())
         utils.perform_basic_checks()
-        
-        matlab_proxy_info = start_matlab_proxy_sync(parent_id, caller_id)
+
+        matlab_proxy_info, loop = start_matlab_proxy_sync(parent_id, caller_id)
         headers = matlab_proxy_info.get("headers")
         mwi_auth_token = headers.get("MWI-AUTH-TOKEN")
         matlab_proxy_url = build_url(
@@ -151,8 +158,8 @@ def license_matlab_proxy_mpm():
         utils.license_matlab_proxy(matlab_proxy_url)
 
         # Wait for matlab-proxy to be up and running
-        utils.wait_matlab_proxy_ready(
-            matlab_proxy_info.get("absolute_url")
+        loop.run_until_complete(
+            utils.wait_matlab_proxy_ready(matlab_proxy_info.get("absolute_url"))
         )
 
         time.sleep(10)
@@ -165,6 +172,7 @@ def license_matlab_proxy_mpm():
 
         except Exception as e:
             print(f"Failed to shut down matlab-proxy: {e}")
+
 
 def build_url(base_url, path, query_params):
     # """

@@ -100,6 +100,7 @@ if os.getenv("MWI_USE_FALLBACK_KERNEL") == "true":
         except Exception:
             proc.kill()
 
+
 @pytest.fixture(scope="module", name="module_monkeypatch")
 def monkeypatch_module_scope_fixture():
     """

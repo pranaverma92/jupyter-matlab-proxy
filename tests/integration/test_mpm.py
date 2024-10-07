@@ -5,6 +5,7 @@ import time
 from playwright.sync_api import sync_playwright
 
 if os.getenv("MWI_USE_FALLBACK_KERNEL") == "false":
+
     @pytest.fixture(scope="session", autouse=True)
     def start_jupyter_lab():
         # Start JupyterLab
@@ -30,7 +31,6 @@ if os.getenv("MWI_USE_FALLBACK_KERNEL") == "false":
         jupyter_process.terminate()
         jupyter_process.wait()
 
-
     def is_process_running(process_name):
         import psutil
 
@@ -45,7 +45,6 @@ if os.getenv("MWI_USE_FALLBACK_KERNEL") == "false":
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
         return False
-
 
     def test_process_got_created():
         from playwright.sync_api import sync_playwright, expect
