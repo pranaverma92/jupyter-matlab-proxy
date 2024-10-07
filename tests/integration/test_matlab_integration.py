@@ -46,8 +46,8 @@ class MATLABKernelTests(jupyter_kernel_test.KernelTests):
             "GITHUB_WORKSPACE", os.path.dirname(os.path.abspath(__name__))
         )
         matlab_proxy_logs_path = os.path.join(base_path, log_path)
-        os.environ['MWI_LOG_FILE'] = matlab_proxy_logs_path
-        os.environ['MWI_LOG_LEVEL'] = "DEBUG"
+        os.environ["MWI_LOG_FILE"] = matlab_proxy_logs_path
+        os.environ["MWI_LOG_LEVEL"] = "DEBUG"
         self.flush_channels()
 
     def tearDown(self):

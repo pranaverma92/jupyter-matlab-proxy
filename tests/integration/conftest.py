@@ -218,6 +218,7 @@ def matlab_config_cleanup_fixture(request):
             proc.kill()
 >>>>>>> 99b2cd2 (Integration tests changes to accomodate MATLAB Proxy Manager)
 
+
 @pytest.fixture(scope="module", name="module_monkeypatch")
 def monkeypatch_module_scope_fixture():
     """
