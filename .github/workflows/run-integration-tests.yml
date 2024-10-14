@@ -49,11 +49,11 @@ jobs:
       - name: Ensure browsers are installed for playwright
         run: python3 -m playwright install --with-deps
 
-       - name: License MATLAB Proxy
-         env:
+      - name: License MATLAB Proxy
+        env:
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
-         run: |
+        run: |
           python3 -c "from tests.integration.utils import licensing; licensing.license_matlab_proxy_no_mpm()"
 
       - name: Integration test with pytest
