@@ -108,6 +108,7 @@ async def wait_matlab_proxy_ready(matlab_proxy_url):
             # intermediate connection errors
             pass
     assert is_matlab_licensed is True, "MATLAB is not licensed"
+    print(f"MATLAB_STATUS {matlab_status}")
     assert (
         matlab_status == "up"
     ), f"matlab-proxy process did not start successfully\nMATLAB Status is '{matlab_status}'"

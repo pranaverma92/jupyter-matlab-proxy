@@ -99,28 +99,38 @@ def license_matlab_proxy_no_mpm():
         print(f"An error occurred: {e}")
     finally:
         try:
-            shutdown_matlab_proxy_no_mpm(proc, loop)
+            shutdown_matlab_proxy_no_mpm(matlab_proxy_url, proc)
 
         except Exception as e:
             print(f"Failed to shut down matlab-proxy: {e}")
 
 
-def shutdown_matlab_proxy_no_mpm(proc, loop):
+def shutdown_matlab_proxy_no_mpm(url, proc):
     # Terminate matlab-proxy
 
-    timeout = 120
-    child_process = psutil.Process(proc.pid).children(recursive=True)
-    for process in child_process:
-        try:
-            process.terminate()
-            process.wait()
-        except Exception:
-            pass
+    # timeout = 120
+    # child_process = psutil.Process(proc.pid).children(recursive=True)
+    # for process in child_process:
+    #     try:
+    #         process.terminate()
+    #         process.wait()
+    #     except Exception:
+    #         pass
 
+    # try:
+    #     proc.terminate()
+    #     loop.run_until_complete(asyncio.wait_for(proc.wait(), timeout=timeout))
+    # except Exception:
+    #     proc.kill()
+
+    # Request timeouts
+    timeout = 120  # seconds
+    # Send shutdown_integration request to MATLAB Proxy
+    shutdown_url = f"{url}/shutdown_integration"
     try:
-        proc.terminate()
-        loop.run_until_complete(asyncio.wait_for(proc.wait(), timeout=timeout))
-    except Exception:
+        requests.delete(shutdown_url, timeout=timeout)
+    except requests.exceptions.Timeout:
+        print("Timed out waiting for matlab-proxy to shutdown, killing process.")
         proc.kill()
 
 
