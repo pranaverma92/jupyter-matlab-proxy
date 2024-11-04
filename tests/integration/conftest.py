@@ -1,9 +1,9 @@
 # Copyright 2023-2024 The MathWorks, Inc.
 
-import os
-import tests.integration.utils.integration_test_utils as utils
 import matlab_proxy.util.event_loop as mwi_event_loop
+import os
 import pytest
+import tests.integration.utils.integration_test_utils as utils
 import requests.exceptions
 from matlab_proxy import settings as mwi_settings
 
