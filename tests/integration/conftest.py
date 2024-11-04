@@ -9,7 +9,7 @@ from matlab_proxy import settings as mwi_settings
 
 _MATLAB_STARTUP_TIMEOUT = mwi_settings.get_process_startup_timeout()
 
-if os.getenv("MWI_USE_FALLBACK_KERNEL") != "true":
+if os.getenv("MWI_USE_FALLBACK_KERNEL") != "false":
 
     print(f"MWI_USE_FALLBACK_KERNEL is {os.getenv('MWI_USE_FALLBACK_KERNEL')}")
 
