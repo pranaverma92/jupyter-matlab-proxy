@@ -82,7 +82,6 @@ if os.getenv("MWI_USE_FALLBACK_KERNEL") != "false":
         yield
 
         # Request timeouts
-        # Request timeouts
         timeout = 120  # seconds
         # Send shutdown_integration request to MATLAB Proxy
         shutdown_url = f"{matlab_proxy_url}/shutdown_integration"

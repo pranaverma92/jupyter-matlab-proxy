@@ -44,7 +44,6 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install wheel pytest
           python3 -m pip install .[dev]
-          python3 -m pip install jupyter
 
       - name: Ensure browsers are installed for playwright
         run: python3 -m playwright install --with-deps
@@ -54,9 +53,13 @@ jobs:
           TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
         run: |
-          python3 -c "from tests.integration.utils import licensing; licensing.license_matlab_proxy_no_mpm()"
+          python3 -c "from tests.integration.utils import licensing; licensing.start_and_license_matlab_proxy_using_jsp()"
 
       - name: Integration test with pytest
+        env:
+          MWI_LOG_LEVEL: "DEBUG"
+          MWI_LOG_FILE: ${{github.workspace}}/tests/integration/integ_logs.log
+
         run: python3 -m pytest tests/integration -vs
 
       - name: Preserve test logs

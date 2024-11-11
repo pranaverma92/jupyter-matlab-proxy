@@ -2,13 +2,10 @@
 
 import asyncio
 import os
-import psutil
 from tests.integration.utils import integration_test_utils as utils
 import requests
 import matlab_proxy_manager.lib.api as mpm_lib
-
 from matlab_proxy import settings as mwi_settings
-import matlab_proxy_manager.web.app as mpm
 
 _MATLAB_STARTUP_TIMEOUT = mwi_settings.get_process_startup_timeout()
 
@@ -25,9 +22,8 @@ def start_matlab_proxy_sync(parent_id, caller_id, isolated_matlab=False):
         loop.run_until_complete(
             mpm_lib.start_matlab_proxy_for_kernel(caller_id, parent_id, isolated_matlab)
         ),
-        loop,
+        loop
     )
-
 
 def shutdown_matlab_proxy_sync(parent_id, caller_id, mpm_auth_token):
     """
@@ -40,7 +36,7 @@ def shutdown_matlab_proxy_sync(parent_id, caller_id, mpm_auth_token):
     loop.run_until_complete(mpm_lib.shutdown(parent_id, caller_id, mpm_auth_token))
 
 
-def license_matlab_proxy_no_mpm():
+def start_and_license_matlab_proxy_using_jsp():
     try:
         import matlab_proxy.util
 
@@ -99,30 +95,13 @@ def license_matlab_proxy_no_mpm():
         print(f"An error occurred: {e}")
     finally:
         try:
-            shutdown_matlab_proxy_no_mpm(matlab_proxy_url, proc)
+            shutdown_matlab_proxy_jsp(matlab_proxy_url, proc)
 
         except Exception as e:
             print(f"Failed to shut down matlab-proxy: {e}")
 
 
-def shutdown_matlab_proxy_no_mpm(url, proc):
-    # Terminate matlab-proxy
-
-    # timeout = 120
-    # child_process = psutil.Process(proc.pid).children(recursive=True)
-    # for process in child_process:
-    #     try:
-    #         process.terminate()
-    #         process.wait()
-    #     except Exception:
-    #         pass
-
-    # try:
-    #     proc.terminate()
-    #     loop.run_until_complete(asyncio.wait_for(proc.wait(), timeout=timeout))
-    # except Exception:
-    #     proc.kill()
-
+def shutdown_matlab_proxy_jsp(url, proc):
     # Request timeouts
     timeout = 120  # seconds
     # Send shutdown_integration request to MATLAB Proxy
@@ -158,8 +137,7 @@ def license_matlab_proxy_mpm():
         headers = matlab_proxy_info.get("headers")
         mwi_auth_token = headers.get("MWI-AUTH-TOKEN")
         matlab_proxy_url = build_url(
-            matlab_proxy_info.get("server_url"),
-            headers.get("MWI-BASE-URL"),
+            matlab_proxy_info.get("absolute_url"),
             {"mwi-auth-token": mwi_auth_token},
         )
         mpm_auth_token = matlab_proxy_info.get("mpm_auth_token")
@@ -172,8 +150,6 @@ def license_matlab_proxy_mpm():
             utils.wait_matlab_proxy_ready(matlab_proxy_info.get("absolute_url"))
         )
 
-        time.sleep(10)
-
     except Exception as err:
         print(f"An error occurred: {err}")
     finally:
@@ -183,8 +159,7 @@ def license_matlab_proxy_mpm():
         except Exception as e:
             print(f"Failed to shut down matlab-proxy: {e}")
 
-
-def build_url(base_url, path, query_params):
+def build_url(url, query_params):
     # """
     # Constructs a full URL with the given base URL, path, and query parameters.
 
@@ -196,17 +171,17 @@ def build_url(base_url, path, query_params):
     # Returns:
     #     str: The full URL with encoded query parameters.
     # """
-    from urllib.parse import urlencode, urlunparse, urlparse
+    # from urllib.parse import urlencode, urlunparse, urlparse
 
-    # Parse the base URL to extract the scheme and netloc
-    parsed_url = urlparse(base_url)
+    # # Parse the base URL to extract the scheme and netloc
+    # parsed_url = urlparse(base_url)
 
-    # Ensure the path is correctly concatenated
-    full_path = f"{parsed_url.path.rstrip('/')}/{path.lstrip('/')}"
+    # # Ensure the path is correctly concatenated
+    # full_path = f"{parsed_url.path.rstrip('/')}/{path.lstrip('/')}"
 
-    query_string = urlencode(query_params)
-    url = urlunparse(
-        (parsed_url.scheme, parsed_url.netloc, full_path, "", query_string, "")
-    )
+    # query_string = urlencode(query_params)
+    # url = urlunparse(
+    #     (parsed_url.scheme, parsed_url.netloc, full_path, "", query_string, "")
+    # )
 
-    return url
+    return requests.Request("GET", url, params=query_params).prepare().url
